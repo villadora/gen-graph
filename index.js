@@ -31,7 +31,28 @@ function isIsomorphism(a, b, path) {
         return;
 
       if (da && db) {
+        var das = Object.keys(da).sort(),
+          dbs = Object.keys(dbs).sort();
 
+        if (das.length != dbs.length)
+          compare = false;
+        else {
+          for (var i = 0, len = das.length; i < len && compare; ++i) {
+            var aname = das[i],
+              bname = dbs[i];
+            if (aname != bname)
+              compare = false;
+            else {
+              var ma = da[aname],
+                mb = db[bname];
+              if (ma.version != mb.version) {
+                compare = false;
+              } else {
+                compare = isIsomorphism(ma, mb, path);
+              }
+            }
+          }
+        }
       } else {
         compare = false;
       }
