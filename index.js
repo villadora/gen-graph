@@ -12,17 +12,34 @@ module.exports = function(trees, options) {
 
 
 
-function isIsomorphism(a, b) {
-  if (a.name == b.name && a.version == b.version) {
+function isIsomorphism(a, b, path) {
+  path = path || [];
+  var aid = a.name + '@' + a.version;
+  var bid = b.name + '@' + b.version;
+  if (aid == bid) {
+
+    if (~path.indexOf(aid)) {
+      return true;
+    }
+
+    path.push(aid);
+    var compare = true;
     EDGE_KEYS.forEach(function(depName) {
       var da = a[depName],
         db = b[depName];
+      if (!compare)
+        return;
 
-      if (da && db && da.length == db.length) {
+      if (da && db) {
 
+      } else {
+        compare = false;
       }
-
     });
+
+    path.pop();
+
+    return compare;
   }
 
   return false;
