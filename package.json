@@ -1,0 +1,27 @@
+{
+  "name": "gen-graph",
+  "version": "0.0.1",
+  "description": "gen-graph",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/villadora/gen-graph.git"
+  },
+  "keywords": [
+    "gen-graph"
+  ],
+  "engines": { 
+    "node": ">=0.10.0"
+  },
+  "author": "villadora",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/villadora/gen-graph/issues"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  }
+}
