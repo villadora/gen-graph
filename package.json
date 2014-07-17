@@ -1,6 +1,6 @@
 {
   "name": "gen-graph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "gen-graph",
   "main": "index.js",
   "scripts": {
