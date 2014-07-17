@@ -13,7 +13,7 @@ $ npm install gen-graph --save
 var graph = require('gen-graph');
 
 
-var conf = graph(shrinkwrap_json);
+var conf = graph(shrinkwrap_json, options);
 
 conf = graph([shrinkwrap1, shrinkwrap2], {
   edge_keys:['dependencies', 'asyncDependencies', 'devDependencies']
@@ -35,6 +35,16 @@ var conf = graph({ name: "json", version: "1.0.0"});
 ```
 
 So root node can be located fast.
+
+## Options
+
+### edge_keys
+
+Keys will be traveled as edges in graph, like 'devDependencies'. Default is ['dependencies', 'asyncDependencies']
+
+### compress
+
+Whether output name in the graph node. Default is false.
 
 ## Licence
 
