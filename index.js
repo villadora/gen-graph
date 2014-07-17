@@ -15,6 +15,7 @@ module.exports = function(trees, options) {
   };
 
   options = options || {};
+  var compress = options.compress != false; // default true
   var edgeKeys = options.edge_keys || EDGE_KEYS;
 
   if (!Array.isArray(trees))
@@ -86,7 +87,7 @@ module.exports = function(trees, options) {
 
 
     // post order travel
-    var obj = rs[oid] = [id];
+    var obj = rs[oid] = [compress ? root.version: id];
     var dep;
 
     edgeKeys.forEach(function(depName) {

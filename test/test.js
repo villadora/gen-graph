@@ -11,7 +11,7 @@ describe('graph generator', function() {
   it('all', function() {
     var mixed = readJSON('mixed');
     mixed.version = "0.1.1";
-    var config = graph([mixed, readJSON('cycle')]);
+    var config = graph([mixed, readJSON('cycle')], { compress: false});
 
     assertLength(config, 13);
     assertTimes(config, "a@1.0.0", 2);
@@ -28,7 +28,7 @@ describe('graph generator', function() {
 
   it('mixed', function() {
     var tree = readJSON('mixed');
-    var config = graph(tree);
+    var config = graph(tree, { compress: false });
 
     assertLength(config, 12);
     assertTimes(config, "a@1.0.0", 2);
@@ -50,7 +50,6 @@ describe('graph generator', function() {
   it('cycle', function() {
     var tree = readJSON('cycle');
     var config = graph(tree);
-
     assertLength(config, 9);
     assertUniq(config);
   });
@@ -59,7 +58,7 @@ describe('graph generator', function() {
 
   it('simple', function() {
     var tree = readJSON('simple');
-    var config = graph(tree);
+    var config = graph(tree, { compress: false});
 
     assert(config[0] && config[0].length == 1);
     assert.equal(config[0][0], 'test-pkg@0.1.0');
@@ -68,7 +67,7 @@ describe('graph generator', function() {
 
   it('nodev', function() {
     var tree = readJSON('nodev');
-    var config = graph(tree);
+    var config = graph(tree, { compress: false});
 
     assert(config[0] && config[0].length == 2);
     assert.equal(config[0][0], 'test-pkg@0.1.0');
@@ -80,7 +79,7 @@ describe('graph generator', function() {
 
   it('nested', function() {
     var tree = readJSON('nested');
-    var config = graph(tree);
+    var config = graph(tree, {compress: false});
 
     assertLength(config, 5);
     assertTimes(config, "json@1.0.1", 1);
@@ -92,7 +91,7 @@ describe('graph generator', function() {
 
   it('branch', function() {
     var tree = readJSON('branch');
-    var config = graph(tree);
+    var config = graph(tree, { compress: false});
 
     assertLength(config, 6);
     assertTimes(config, "json@1.0.1", 1);
@@ -103,7 +102,7 @@ describe('graph generator', function() {
 
   it('self', function() {
     var tree = readJSON('self');
-    var config = graph(tree);
+    var config = graph(tree, { compress: false });
 
     assertLength(config, 1);
     assertTimes(config, "test-pkg@0.1.0", 1);
