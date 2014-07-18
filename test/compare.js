@@ -38,8 +38,9 @@ describe('compare', function() {
     });
   }
 
-  ['ab', 'self', 'simple', 'nested', 'nodev', 'cycle', 'mixed', 'branch'].forEach(testCase);
+  ['async', 'ab', 'self', 'simple', 'nested', 'nodev', 'cycle', 'mixed', 'branch'].forEach(testCase);
 
+  notEqual('async', 'self');
   notEqual('ab', 'simple');
   notEqual('self', 'simple');
   notEqual('simple', 'nested');
