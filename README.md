@@ -15,6 +15,8 @@ var graph = require('gen-graph');
 
 var conf = graph(shrinkwrap_json, options);
 
+conf = graph(shrinkwrap);
+
 conf = graph([shrinkwrap1, shrinkwrap2], {
   edge_keys:['dependencies', 'asyncDependencies', 'devDependencies']
 });
@@ -25,7 +27,17 @@ Generated object will contains '_' property with the root tree's name and versio
 ```js
 var conf = graph({ name: "json", version: "1.0.0"});
 
-// conf will be
+// compressed conf will be
+{
+  0: [ 1.0.0" ],
+  _: {
+      "json@1.0.0": 0
+  }
+}
+
+conf = graph({ name: "json", version: "1.0.0"}, { compress: false});
+
+// uncompressed conf will be
 {
   0: [ "json@1.0.0" ],
   _: {
@@ -38,13 +50,13 @@ So root node can be located fast.
 
 ## Options
 
-### edge_keys
+### edge_keys {Array=}
 
 Keys will be traveled as edges in graph, like 'devDependencies'. Default is ['dependencies', 'asyncDependencies']
 
-### compress
+### compress {boolean=}
 
-Whether output name in the graph node. Default is false.
+Whether output name in the graph node. Default is `true`.
 
 ## Licence
 
