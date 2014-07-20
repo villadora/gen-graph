@@ -15,6 +15,7 @@ describe('graph generator', function() {
       compress: false
     });
 
+
     assertLength(config, 13);
     assertTimes(config, "a@1.0.0", 2);
     assertTimes(config, "b@1.0.0", 1);

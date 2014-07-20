@@ -36,7 +36,7 @@ module.exports = function(trees, options) {
 
 
     var cycle = false;
-    for (var i = 0, len = path.length; i < len; ++i) {
+    for (var len = path.length, i = len - 1; i >= 0; --i) {
       if (path[i].id == id) {
         root.__id = path[i].oid;
         cycle = true;
