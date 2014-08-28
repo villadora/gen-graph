@@ -88,21 +88,21 @@ module.exports = function(trees, options) {
 
     // post order travel
     var obj = rs[oid] = [compress ? root.version: id];
-    var dep;
 
-    edgeKeys.forEach(function(depName) {
+    for(var i = 0; i < edgeKeys.length; ++i) {
+      var depName = edgeKeys[i];
       var deps = root[depName];
       if (deps) {
-        dep = dep || {};
+        var dep = {};
         Object.keys(deps).forEach(function(name) {
           var node = deps[name];
           dep[node.from] = gid(node);
         });
+        
+        obj.push(dep);
       }
-    });
+    }
 
-    if (dep)
-      obj.push(dep);
 
     path.pop();
   }

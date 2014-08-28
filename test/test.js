@@ -17,6 +17,7 @@ describe('graph generator', function() {
 
 
     assertLength(config, 13);
+    assert.equal(getRootNode(config).length, 2);
     assertTimes(config, "a@1.0.0", 2);
     assertTimes(config, "b@1.0.0", 1);
     assertTimes(config, "b@1.0.1", 1);
@@ -36,6 +37,7 @@ describe('graph generator', function() {
     });
 
     assertLength(config, 12);
+    assert.equal(getRootNode(config).length, 2);
     assertTimes(config, "a@1.0.0", 2);
     assertTimes(config, "b@1.0.0", 1);
     assertTimes(config, "b@1.0.1", 1);
@@ -47,6 +49,7 @@ describe('graph generator', function() {
     var config = graph(tree);
 
     assertLength(config, 3);
+    assert.equal(getRootNode(config).length, 2);
     assertUniq(config);
   });
 
@@ -56,6 +59,7 @@ describe('graph generator', function() {
     var tree = readJSON('cycle');
     var config = graph(tree);
     assertLength(config, 9);
+    assert.equal(getRootNode(config).length, 2);
     assertUniq(config);
   });
 
@@ -67,6 +71,7 @@ describe('graph generator', function() {
       compress: false
     });
 
+    assert.equal(getRootNode(config).length, 1);
     assert(config[0] && config[0].length == 1);
     assert.equal(config[0][0], 'test-pkg@0.1.0');
   });
@@ -93,6 +98,8 @@ describe('graph generator', function() {
     });
 
     assertLength(config, 5);
+    assert.equal(getRootNode(config).length, 2);
+
     assertTimes(config, "json@1.0.1", 1);
     assertTimes(config, "util@1.0.4", 1);
     assertTimes(config, "util@1.0.5", 1);
@@ -108,6 +115,9 @@ describe('graph generator', function() {
     });
 
     assertLength(config, 6);
+    var root = getRootNode(config);
+    assert.equal(root.length, 3);
+
     assertTimes(config, "json@1.0.1", 1);
     assertTimes(config, "json@1.0.2", 1);
     assertTimes(config, "util@1.0.4", 2);
@@ -134,6 +144,7 @@ describe('graph generator', function() {
     });
 
     assertLength(config, 1);
+    assert.equal(getRootNode(config).length, 2);
     assertTimes(config, "test-pkg@0.1.0", 1);
     assert(config[0] && config[0].length == 2);
     assert.equal(config[0][1]['test-pkg@~0.1.0'], 0);
@@ -171,6 +182,17 @@ describe('graph generator', function() {
 
   function readJSON(name) {
     return JSON.parse(JSON.stringify(require('./fixtures/' + name)));
+  }
+
+
+  function getRootNode(config) {
+    var idx;
+    for(var p in config._) {
+      if(idx !== undefined) break;
+      idx = config._[p];
+    }
+
+    return config[idx];
   }
 
 });
