@@ -1,10 +1,8 @@
 "use strict";
 var Multimap = require('multimap');
 
-
 var EDGE_KEYS = require('./lib/common').EDGE_KEYS;
 var isIsomorphism = require('./lib/iso');
-
 
 module.exports = function(trees, options) {
   gid.__id__ = 0;
@@ -15,7 +13,7 @@ module.exports = function(trees, options) {
   };
 
   options = options || {};
-  var compress = options.compress != false; // default true
+  var compress = options.compress !== false; // default true
   var edgeKeys = options.edge_keys || EDGE_KEYS;
 
   if (!Array.isArray(trees))
@@ -88,25 +86,22 @@ module.exports = function(trees, options) {
 
     // post order travel
     var obj = rs[oid] = [compress ? root.version: id];
-    var dep, asyncDep;
+    var dep;
 
     edgeKeys.forEach(function(depName) {
       var deps = root[depName];
       if (deps) {
-        var d = (depName == 'asyncDependencies') ? (asyncDep = asyncDep || {}) : (dep = dep || {});
+        dep = dep || {};
         Object.keys(deps).forEach(function(name) {
           var node = deps[name];
-          d[node.from] = gid(node);
+          dep[node.from] = gid(node);
         });
       }
     });
 
     if(dep)
       obj.push(dep);
-    
-    if(asyncDep)
-      obj.push(asyncDep);
-    
+
     path.pop();
   }
 

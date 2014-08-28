@@ -115,8 +115,7 @@ describe('graph generator', function() {
     });
 
     assertLength(config, 6);
-    var root = getRootNode(config);
-    assert.equal(root.length, 3);
+    assert.equal(getRootNode(config).length, 2);
 
     assertTimes(config, "json@1.0.1", 1);
     assertTimes(config, "json@1.0.2", 1);
