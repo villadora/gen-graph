@@ -88,22 +88,25 @@ module.exports = function(trees, options) {
 
     // post order travel
     var obj = rs[oid] = [compress ? root.version: id];
+    var dep, asyncDep;
 
-    for(var i = 0; i < edgeKeys.length; ++i) {
-      var depName = edgeKeys[i];
+    edgeKeys.forEach(function(depName) {
       var deps = root[depName];
       if (deps) {
-        var dep = {};
+        var d = (depName == 'asyncDependencies') ? (asyncDep = asyncDep || {}) : (dep = dep || {});
         Object.keys(deps).forEach(function(name) {
           var node = deps[name];
-          dep[node.from] = gid(node);
+          d[node.from] = gid(node);
         });
-        
-        obj.push(dep);
       }
-    }
+    });
 
-
+    if(dep)
+      obj.push(dep);
+    
+    if(asyncDep)
+      obj.push(asyncDep);
+    
     path.pop();
   }
 
